@@ -4,7 +4,7 @@
 // specialChar: 33-47 && 58-64 && 91-96 && 123-126
 // This is a basic random password generator API based on ASCII 128 Chars
 
-const allowedChars =('!,#,$,%,&,(,),*,+,,,-,.,/,0,1,2,3,4,5,6,7,8,9,:,;,<,=,>,?,@,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,[,],^,_,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,{,|,},~')
+const allowedChars =('!,#,$,%,&,(,),*,+,,,-,.,/,0,1,2,3,4,5,6,7,8,9,:,;,=,?,@,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,[,],^,_,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,{,|,},~')
 const allowedCharsArray = allowedChars.split(",")
 console.log(allowedCharsArray)
 
@@ -21,7 +21,7 @@ app.get("/:length", (req, res) => {
     
 
     if(isNaN(passwordLength)){
-        res.status(404).send({
+        res.status(404).json({
             message: "length has to be a number!",
         })
      }else{
@@ -33,6 +33,22 @@ app.get("/:length", (req, res) => {
         res.status(200).json({
             password: getRandomPwd(passwordLength)
              })
+        }
+        } 
+    
+})
+
+app.get("/plain/:length", (req, res) => {
+    const passwordLength = req.params.length;
+    
+
+    if(isNaN(passwordLength)){
+        res.status(404).send("length has to be a number!")
+     }else{
+         if(passwordLength > 20) {
+            res.status(404).json("Max Password length is 20!")
+         }else {
+        res.status(200).send(getRandomPwd(passwordLength))
         }
         } 
     
